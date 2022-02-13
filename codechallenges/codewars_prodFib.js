@@ -83,6 +83,9 @@ function testFnAgainstCaseArray (fnToTest, testCaseArray, showPasses){
   console._times.clear()
 }
 function testFunctionsAgainstArrayByFunction(functionArray, testCaseArray, showPasses){
+  if (!Array.isArray(functionArray)) {
+    functionArray = [functionArray]
+  }
   console.log(`No. test cases: ${testCaseArray.length}`)
   functionArray.forEach(testFuncElement=>{
     console._times.clear()
@@ -90,10 +93,13 @@ function testFunctionsAgainstArrayByFunction(functionArray, testCaseArray, showP
     console._times.clear()
   })
 }
-function testFunctionsAgainstArrayByTestCase(fnsTotest = [], testCaseArray, showPasses = true){
+function testFunctionsAgainstArrayByTestCase(fnsToTest, testCaseArray, showPasses){
+  if (!Array.isArray(fnsToTest)){
+    fnsToTest = [fnsToTest]
+  }
   testCaseArray.forEach(testCase=>{
     console.log(testCase)
-    fnsTotest.forEach(fnToTest=>{
+    fnsToTest.forEach(fnToTest=>{
       testFnAgainstCaseArray(fnToTest, [testCase], showPasses)
     })
   })
@@ -128,7 +134,7 @@ const functionsToTest = [
 ]
 
 testFunctionsAgainstArrayByFunction(functionsToTest, baseFibTestArray)
-testFunctionsAgainstArrayByTestCase(functionsToTest, baseFibTestArray)
+testFunctionsAgainstArrayByTestCase(functionsToTest, [baseFibTestArray[baseFibTestArray.length - 1]])
 
 
 
