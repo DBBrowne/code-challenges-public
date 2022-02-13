@@ -118,7 +118,9 @@ const baseFibTestArray = [
   [60, 1548008755920],
   [100, 354224848179262000000],
   [1000, 4.346655768693743e+208],
-  [1476, 1.3069892237633987e+308]
+  [1476, 1.3069892237633987e+308],
+  [21, 10946],
+  [34, 5702887]
 ]
 
 const functionsToTest = [
@@ -135,18 +137,34 @@ testFunctionsAgainstArrayByTestCase(functionsToTest, [baseFibTestArray[baseFibTe
 
 // https://www.codewars.com/kata/5541f58a944b85ce6d00006a/train/javascript
 
-function productFib(prod){
-  return fibMemo(prod)
+function productFib(targetProd){
+  var prod = 0
+  var fibIndex = -1
+  var lowFibNumber = 0
+  var hiFibNumber = 0
+  var verified = false
+  while (prod < targetProd) {
+    fibIndex++
+    lowFibNumber = fibMemo(fibIndex)
+    hiFibNumber = fibMemo(fibIndex + 1)
+    prod = lowFibNumber * hiFibNumber
+    if (prod === targetProd){
+      verified = true
+    }
+  }
+  return ([lowFibNumber, hiFibNumber, verified])
 }
 
 const productFibTestCases = [
-  [4895, [55, 89, true]]
-  // [5895, [89, 144, false]],
-  // [74049690, [6765, 10946, true]],
-  // [84049690, [10946, 17711, false]],
-  // [193864606, [10946, 17711, true]],
-  // [447577, [610, 987, false]],
-  // [602070, [610, 987, true]]
+  [714, [21,34,true]],
+  [800, [34,55,false]],
+  [4895, [55, 89, true]],
+  [5895, [89, 144, false]],
+  [74049690, [6765, 10946, true]],
+  [84049690, [10946, 17711, false]],
+  [193864606, [10946, 17711, true]],
+  [447577, [610, 987, false]],
+  [602070, [610, 987, true]]
 ]
 
-// testFunctionsAgainstArrayByFunction(productFib, fibProdTestCases, true)
+testFunctionsAgainstArrayByFunction(productFib, productFibTestCases, true)
