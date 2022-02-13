@@ -152,8 +152,15 @@ function productFib(targetProd){
       verified = true
     }
   }
-  return ([lowFibNumber, hiFibNumber, verified])
+  return [lowFibNumber, hiFibNumber, verified]
 }
+
+function productFibElegant(prod){
+  let [a, b] = [0, 1]
+  while (a * b < prod) [a, b] = [b, a + b]
+  return [a, b, a * b === prod]
+}
+
 
 const productFibTestCases = [
   [714, [21,34,true]],
@@ -168,3 +175,4 @@ const productFibTestCases = [
 ]
 
 testFunctionsAgainstArrayByFunction(productFib, productFibTestCases, true)
+testFunctionsAgainstArrayByFunction(productFibElegant, productFibTestCases, true)
