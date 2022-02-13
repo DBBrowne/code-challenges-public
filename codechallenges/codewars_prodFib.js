@@ -54,16 +54,17 @@ function testFn(fnToTest, testCase, showPass){
   const output = fnToTest(testCase[0])
   const assert = output === testCase[1]
   if (showPass){ 
-    console.log(
+    const testStatus = assert ? '✅' : `❌ ${output}`
+    return [
       testCase,
-      assert ? '✅' : `❌ ${output}`
-    )
+      testStatus
+    ]
   }
   if (!showPass && !assert){
-    console.log(
+    return [
       testCase,
       `❌ ${output}`
-    )
+    ]
   }
 }
 
@@ -73,7 +74,8 @@ function testFnAgainstCaseArray (fnToTest, testCaseArray, showPasses){
   console.time(`testing ${fnToTest.name} - ${badUUID}`)
   
   testCaseArray.forEach(testCase =>{
-    testFn(fnToTest, testCase, showPasses)
+    const test = testFn(fnToTest, testCase, showPasses)
+    test && console.log(test)
   }
   )
 
@@ -110,22 +112,23 @@ const baseFibTestArray = [
   [19,4181],
   [22,17711],
   [30,832040],
-  [40,102334155]
-  // [50, 12586269025]
-  // [60, 1548008755920],
-  // [100, 354224848179262000000]
+  [40,102334155],
+  [50, 12586269025],
+  [60, 1548008755920],
+  [100, 354224848179262000000],
+  [1000, 4.346655768693743e+208],
+  [1476, 1.3069892237633987e+308]
 ]
-
 
 const functionsToTest = [
   fibTwo,
   fibTwoMemo,
-  fib,
+  // fib,
   fibMemo
 ]
 
 testFunctionsAgainstArrayByFunction(functionsToTest, baseFibTestArray)
-testFunctionsAgainstArrayByTestCase(functionsToTest, baseFibTestArray, false)
+testFunctionsAgainstArrayByTestCase(functionsToTest, baseFibTestArray)
 
 
 
