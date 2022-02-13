@@ -140,25 +140,18 @@ testFunctionsAgainstArrayByTestCase(functionsToTest, [baseFibTestArray[baseFibTe
 
 // https://www.codewars.com/kata/5541f58a944b85ce6d00006a/train/javascript
 
-// function productFib(prod){
-//   return basefib(prod)
-// }
+function productFib(prod){
+  return fibMemo(prod)
+}
 
-// ;[
-// [4895, [55, 89, true]],
-// [5895, [89, 144, false]],
-// [74049690, [6765, 10946, true]],
-// [84049690, [10946, 17711, false]],
-// [193864606, [10946, 17711, true]],
-// [447577, [610, 987, false]],
-// [602070, [610, 987, true]]
-// ].forEach(testCase =>{
-//   const output = productFib(testCase[0])
-//   output.forEach((result, index) =>{
-//     const assert = result === testCase[1][index]
-//     console.log(
-//       testCase,
-//       assert ? '✅' : `❌ ${output}`
-//     )
-//   })
-// })
+const productFibTestCases = [
+  [4895, [55, 89, true]]
+  // [5895, [89, 144, false]],
+  // [74049690, [6765, 10946, true]],
+  // [84049690, [10946, 17711, false]],
+  // [193864606, [10946, 17711, true]],
+  // [447577, [610, 987, false]],
+  // [602070, [610, 987, true]]
+]
+
+// testFunctionsAgainstArrayByFunction(productFib, fibProdTestCases, true)
