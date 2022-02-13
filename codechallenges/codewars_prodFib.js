@@ -69,9 +69,7 @@ function testFn(fnToTest, testCase, showPass){
 }
 
 function testFnAgainstCaseArray (fnToTest, testCaseArray, showPasses){
-  const badUUID = Math.random()
-  console._times.clear()
-  console.time(`testing ${fnToTest.name} - ${badUUID}`)
+  console.time(`testing ${fnToTest.name}`)
   
   testCaseArray.forEach(testCase =>{
     const test = testFn(fnToTest, testCase, showPasses)
@@ -79,8 +77,7 @@ function testFnAgainstCaseArray (fnToTest, testCaseArray, showPasses){
   }
   )
 
-  console.timeEnd(`testing ${fnToTest.name} - ${badUUID}`)
-  console._times.clear()
+  console.timeEnd(`testing ${fnToTest.name}`)
 }
 function testFunctionsAgainstArrayByFunction(functionArray, testCaseArray, showPasses){
   if (!Array.isArray(functionArray)) {
@@ -88,9 +85,7 @@ function testFunctionsAgainstArrayByFunction(functionArray, testCaseArray, showP
   }
   console.log(`No. test cases: ${testCaseArray.length}`)
   functionArray.forEach(testFuncElement=>{
-    console._times.clear()
     testFnAgainstCaseArray(testFuncElement, testCaseArray, showPasses)
-    console._times.clear()
   })
 }
 function testFunctionsAgainstArrayByTestCase(fnsToTest, testCaseArray, showPasses){
