@@ -1,4 +1,6 @@
-const test  = require('../tools/test')
+const test  = require('../lib/test')
+
+// fibonacci implementations
 
 function memo(fnToMemo){
   var cache = {}
@@ -21,12 +23,14 @@ function memo(fnToMemo){
 
 }
 
-// function fib (n) {
-//   if (n <= 0) return 0
-//   if (n === 1) return 1
-//   return fib(n - 1) + fib(n - 2)
-// }
+// Untenably slow without memoization.  2minutes to calculate fib(50), vs 0.002ms for fibTwoMemo
+function fib (n) {
+  if (n <= 0) return 0
+  if (n === 1) return 1
+  return fib(n - 1) + fib(n - 2)
+}
 
+//TODO: better memoization implementation for recursive functions
 function basefibForMemo (n) {
   if (n <= 0) return 0
   if (n === 1) return 1
@@ -62,8 +66,6 @@ function fibElegantFromCodewars(n){
 
 
 const baseFibTestArray = [
-  [21, 10946],
-  [34, 5702887],
   [0, 0],
   [1, 1],
   [2, 1],
@@ -76,18 +78,20 @@ const baseFibTestArray = [
   [19,4181],
   [22,17711],
   [30,832040],
+  [21, 10946],
+  [34, 5702887],
   [40,102334155],
   [50, 12586269025],
-  [60, 1548008755920],
-  [100, 354224848179262000000],
-  [1000, 4.346655768693743e+208],
-  [1476, 1.3069892237633987e+308]
+  // [60, 1548008755920],
+  // [100, 354224848179262000000],
+  // [1000, 4.346655768693743e+208],
+  // [1476, 1.3069892237633987e+308]
 ]
 
 const functionsToTest = [
   fibTwo,
   fibTwoMemo,
-  // fib,
+  fib,
   fibMemo,
   fibElegantFromCodewars
 ]
@@ -136,5 +140,5 @@ const productFibTestCases = [
   [602070, [610, 987, true]]
 ]
 
-test.byFunction(productFib, productFibTestCases, true)
-test.byFunction(productFibElegant, productFibTestCases, true)
+// test.byFunction(productFib, productFibTestCases, true)
+// test.byFunction(productFibElegant, productFibTestCases, true)
