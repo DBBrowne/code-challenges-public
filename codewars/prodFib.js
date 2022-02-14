@@ -64,6 +64,7 @@ function fibElegantFromCodewars(n){
   return a
 }
 
+const fibElegantFromCodewarsMemo = memo(fibElegantFromCodewars)
 
 const baseFibTestArray = [
   [0, 0],
@@ -82,10 +83,10 @@ const baseFibTestArray = [
   [34, 5702887],
   [40,102334155],
   [50, 12586269025],
-  // [60, 1548008755920],
-  // [100, 354224848179262000000],
-  // [1000, 4.346655768693743e+208],
-  // [1476, 1.3069892237633987e+308]
+  [60, 1548008755920],
+  [100, 354224848179262000000],
+  [1000, 4.346655768693743e+208],
+  [1476, 1.3069892237633987e+308]
 ]
 
 const functionsToTest = [
@@ -93,10 +94,11 @@ const functionsToTest = [
   fibTwoMemo,
   // fib,
   fibMemo,
-  fibElegantFromCodewars
+  fibElegantFromCodewars,
+  fibElegantFromCodewarsMemo
 ]
 
-test.byFunction(functionsToTest, baseFibTestArray)
+// test.byFunction(functionsToTest, baseFibTestArray)
 test.byCase(functionsToTest, [baseFibTestArray[baseFibTestArray.length - 1]])
 
 
