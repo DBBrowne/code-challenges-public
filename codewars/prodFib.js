@@ -1,3 +1,5 @@
+const test  = require('../tools/test')
+
 function memo(fnToMemo){
   var cache = {}
 
@@ -59,56 +61,6 @@ function fibElegantFromCodewars(n){
 }
 
 
-function testFn(fnToTest, testCase, showPass){
-  const output = fnToTest(testCase[0])
-  const assert = output === testCase[1]
-  if (showPass){ 
-    const testStatus = assert ? '✅' : `❌ ${output}`
-    return [
-      testCase,
-      testStatus
-    ]
-  }
-  if (!showPass && !assert){
-    return [
-      testCase,
-      `❌ ${output}`
-    ]
-  }
-}
-
-function testFnAgainstCaseArray (fnToTest, testCaseArray, showPasses){
-  console.time(`testing ${fnToTest.name}`)
-  
-  testCaseArray.forEach(testCase =>{
-    const test = testFn(fnToTest, testCase, showPasses)
-    test && console.log(test)
-  }
-  )
-
-  console.timeEnd(`testing ${fnToTest.name}`)
-}
-function testFunctionsAgainstArrayByFunction(functionArray, testCaseArray, showPasses){
-  if (!Array.isArray(functionArray)) {
-    functionArray = [functionArray]
-  }
-  console.log(`No. test cases: ${testCaseArray.length}`)
-  functionArray.forEach(testFuncElement=>{
-    testFnAgainstCaseArray(testFuncElement, testCaseArray, showPasses)
-  })
-}
-function testFunctionsAgainstArrayByTestCase(fnsToTest, testCaseArray, showPasses){
-  if (!Array.isArray(fnsToTest)){
-    fnsToTest = [fnsToTest]
-  }
-  testCaseArray.forEach(testCase=>{
-    console.log(testCase)
-    fnsToTest.forEach(fnToTest=>{
-      testFnAgainstCaseArray(fnToTest, [testCase], showPasses)
-    })
-  })
-}
-
 const baseFibTestArray = [
   [21, 10946],
   [34, 5702887],
@@ -140,8 +92,8 @@ const functionsToTest = [
   fibElegantFromCodewars
 ]
 
-testFunctionsAgainstArrayByFunction(functionsToTest, baseFibTestArray)
-testFunctionsAgainstArrayByTestCase(functionsToTest, [baseFibTestArray[baseFibTestArray.length - 1]])
+test.byFunction(functionsToTest, baseFibTestArray)
+test.byCase(functionsToTest, [baseFibTestArray[baseFibTestArray.length - 1]])
 
 
 
@@ -184,5 +136,5 @@ const productFibTestCases = [
   [602070, [610, 987, true]]
 ]
 
-testFunctionsAgainstArrayByFunction(productFib, productFibTestCases, true)
-testFunctionsAgainstArrayByFunction(productFibElegant, productFibTestCases, true)
+test.byFunction(productFib, productFibTestCases, true)
+test.byFunction(productFibElegant, productFibTestCases, true)
