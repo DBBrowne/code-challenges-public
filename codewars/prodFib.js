@@ -24,11 +24,11 @@ function memo(fnToMemo){
 }
 
 // Untenably slow without memoization.  2minutes to calculate fib(50), vs 0.002ms for fibTwoMemo
-function fib (n) {
-  if (n <= 0) return 0
-  if (n === 1) return 1
-  return fib(n - 1) + fib(n - 2)
-}
+// function fib (n) {
+//   if (n <= 0) return 0
+//   if (n === 1) return 1
+//   return fib(n - 1) + fib(n - 2)
+// }
 
 //TODO: better memoization implementation for recursive functions
 function basefibForMemo (n) {
@@ -91,7 +91,7 @@ const baseFibTestArray = [
 const functionsToTest = [
   fibTwo,
   fibTwoMemo,
-  fib,
+  // fib,
   fibMemo,
   fibElegantFromCodewars
 ]
