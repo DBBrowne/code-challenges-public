@@ -48,6 +48,15 @@ function fibTwo (n) {
 
 const fibTwoMemo = memo(fibTwo)
 
+function fibElegantFromCodewars(n){
+  let [a, b] = [0, 1]
+  let i = 0
+  while (i < n) {
+    i++
+    [a, b] = [b, a + b]
+  }
+  return a
+}
 
 
 function testFn(fnToTest, testCase, showPass){
@@ -101,6 +110,8 @@ function testFunctionsAgainstArrayByTestCase(fnsToTest, testCaseArray, showPasse
 }
 
 const baseFibTestArray = [
+  [21, 10946],
+  [34, 5702887],
   [0, 0],
   [1, 1],
   [2, 1],
@@ -118,16 +129,15 @@ const baseFibTestArray = [
   [60, 1548008755920],
   [100, 354224848179262000000],
   [1000, 4.346655768693743e+208],
-  [1476, 1.3069892237633987e+308],
-  [21, 10946],
-  [34, 5702887]
+  [1476, 1.3069892237633987e+308]
 ]
 
 const functionsToTest = [
   fibTwo,
   fibTwoMemo,
   // fib,
-  fibMemo
+  fibMemo,
+  fibElegantFromCodewars
 ]
 
 testFunctionsAgainstArrayByFunction(functionsToTest, baseFibTestArray)
@@ -145,7 +155,7 @@ function productFib(targetProd){
   var verified = false
   while (prod < targetProd) {
     fibIndex++
-    lowFibNumber = fibMemo(fibIndex)
+    lowFibNumber = hiFibNumber
     hiFibNumber = fibMemo(fibIndex + 1)
     prod = lowFibNumber * hiFibNumber
     if (prod === targetProd){
