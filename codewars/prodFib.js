@@ -104,7 +104,7 @@ test.byCase(functionsToTest, [baseFibTestArray[baseFibTestArray.length - 1]])
 
 
 // https://www.codewars.com/kata/5541f58a944b85ce6d00006a/train/javascript
-
+// eslint-disable-next-line no-unused-vars
 function productFib(targetProd){
   var prod = 0
   var fibIndex = -1
@@ -122,14 +122,14 @@ function productFib(targetProd){
   }
   return [lowFibNumber, hiFibNumber, verified]
 }
-
+// eslint-disable-next-line no-unused-vars
 function productFibElegant(prod){
   let [a, b] = [0, 1]
   while (a * b < prod) [a, b] = [b, a + b]
   return [a, b, a * b === prod]
 }
 
-
+// eslint-disable-next-line no-unused-vars
 const productFibTestCases = [
   [714, [21,34,true]],
   [800, [34,55,false]],
