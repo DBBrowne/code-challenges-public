@@ -125,7 +125,7 @@ Test case: Input: 2 Out: 2
  - jsdoc docstrings
  - Move these to GH Issues
  - Automate updating this readme with a tree to make locating completed challenges easier? (bash script? incorporate Tree? commit hook?) 
- - Examine stdout vs console.log?  May help with testing the testing lib.
+ - Examine stdout vs console.info?  May help with testing the testing lib.
  - Refactor tests of the testing library to give a pass/fail on expected behaviour rather than user observing for known outcomes.
  - Refactor showPasses to {options} parameter in testFn
  - Implement NOT flag in test suite
