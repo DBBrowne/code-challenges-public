@@ -97,6 +97,19 @@ def matrix_maker(lenN,lenM=0):
 
 # print_matrix(rotate_in_place(matrix_maker(100)))
 
+def rotate_with_map(matrix):
+    matrix = transposeWithMap(matrix)
+    length = len(matrix)
+    for i in range(length):
+        reverse_in_place(matrix[i])
+    
+    return matrix
+
+def rotate_in_place_fast(matrix):
+    for r, row in enumerate(zip(*matrix)):
+        matrix[r] = list(reversed(row))
+    return matrix
+
 
 mega_matrix_1 = matrix_maker(1000)
 mega_matrix_2 = matrix_maker(5000)
@@ -109,6 +122,17 @@ def timer(function, arg):
     function(arg)
     print("--- %s seconds ---" % (time.time() - start_time))
 
-timer(rotate_in_place, mega_matrix_1)
+print('matrix 1000')
+timer(rotate_in_place, mega_matrix_1) # 0.076 seconds
+timer(rotate_with_map, mega_matrix_1) # 0.056 seconds
+timer(rotate_in_place_fast, mega_matrix_1) # 0.015 seconds
+
+print('matrix 5000')
 timer(rotate_in_place, mega_matrix_2)
-timer(rotate_in_place, mega_matrix_3)
+timer(rotate_with_map, mega_matrix_2)
+timer(rotate_in_place_fast, mega_matrix_2)
+
+print('matrix 10000')
+timer(rotate_in_place, mega_matrix_3) # 17.21 seconds
+timer(rotate_with_map, mega_matrix_3) # 5.46 seconds
+timer(rotate_in_place_fast, mega_matrix_3) # 3.22 seconds
