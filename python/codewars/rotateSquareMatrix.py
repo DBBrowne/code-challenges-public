@@ -97,6 +97,18 @@ def matrix_maker(lenN,lenM=0):
 
 # print_matrix(rotate_in_place(matrix_maker(100)))
 
-rotate_in_place(matrix_maker(100))
-# print_matrix(matrix_maker(1000))
 
+mega_matrix_1 = matrix_maker(1000)
+mega_matrix_2 = matrix_maker(5000)
+mega_matrix_3 = matrix_maker(10000)
+
+import time
+
+def timer(function, arg):
+    start_time = time.time()
+    function(arg)
+    print("--- %s seconds ---" % (time.time() - start_time))
+
+timer(rotate_in_place, mega_matrix_1)
+timer(rotate_in_place, mega_matrix_2)
+timer(rotate_in_place, mega_matrix_3)
