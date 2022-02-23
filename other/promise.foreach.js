@@ -8,7 +8,7 @@
 // }
 
 // question: how does this pass back to the acc?
-// question: why does this do anythin other than resolve the initial Promise.protoype.resolve, and then sit quietly?
+// question: why does this do anything other than resolve the initial Promise.protoype.resolve(), and then sit quietly?
 
 // let w = Promise.resolve()
 // console.log(w)
@@ -32,16 +32,20 @@ async function sleep(n) {
 [1000,30,500,3000].reduce(async function (promise, n, i){
   await promise
   await sleep(n)
-  console.log(i, 'Done')
+  console.log(i, 'Done with initial resolve')
 }, Promise.resolve());
 
 [1000,30,500,3000].reduce(async function (promise, n, i){
   await promise
   await sleep(n)
-  console.log(i, 'Done')
-}, 1)
+  console.log(i, 'Done with initial 1')
+}, 1);
 
-
+[1000,30,500,3000].reduce(async function (promise, n, i){
+  await promise
+  await sleep(n)
+  console.log(i, 'Done with initial undeclared')
+})
 
 
 
