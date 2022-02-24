@@ -7,11 +7,26 @@
 //   }, Promise.resolve())
 // }
 
-// question: how does this pass back to the acc?
-// question: why does this do anything other than resolve the initial Promise.protoype.resolve(), and then sit quietly?
+// Question: How does this pass back to the `acc`? Why does this do anything other than resolve the initial `Promise.protoype.resolve()`, and then sit quietly?
+// Answer:
+// The function used as a reducer is async. By definition this returns a promise, which becomes the accumulator (better thought of as `previous` here) in the reducer.
+// In fact, THERE IS NO ACCUMULATOR IN REDUCE.  
+// The definition is `Array.prototype.reduce(function reducer (prev, current, index, array){}, initialValueForPrev)`.
+// Sometimes we `return prev + current` from the reducer to make an accumulator, but that's an implementation.
+// I couldn't get over the lack of a `return` inside `reducer`, and could not get how the promise from  `await fn(el)` was getting into `prev`.
+// It doesn't.  A different promise is returned from the reducer function into the `prev` (the one from the reducer function), and that promise is waiting for the `fn(el)` promise to resolve.
 
-// let w = Promise.resolve()
-// console.log(w)
+
+// Question: How does each iteration get passed into the initial Promise.resolve()?
+// Answer:
+// It doesn't.
+// Reduce's default behaviour, with no second argument, is to use the first element of the array as the initial value.
+// In this case, that would mean that the first `await promise` would `await arr[0]`, rather than `await fn(arr[0])`.  `fn(arr[0])` would never run.
+// The `initial` argument is only there to prevent Reduce using the first value in the array as the initial, and thereby failing to evaluate the passed `fn` for that value.  The initial value could be anything other than `not defined`, including null or undefined.
+// Promise.resolve() is chosen as the initial to indicate to the author that 'prev' is a promise, and to ensure that the type of `prev` does not change between the first and subsequent iterations.
+
+const w = Promise.resolve()
+console.log('won\'t be resolved yet: ',w)
 
 
 
@@ -23,31 +38,49 @@ Promise._forEach = async function (arr, fn) {
   }, Promise.resolve())
 }
 
+
+
 async function sleep(n) {
   await new Promise(function(resolve){
     setTimeout(resolve, n)
   })
 }
 
-[1000,30,500,3000].reduce(async function (promise, n, i){
+const timeouts = [1000,30,500,3000]
+
+timeouts.reduce(async function (promise, n, i){
   await promise
   await sleep(n)
   console.log(i, 'Done with initial resolve')
-}, Promise.resolve());
+}, Promise.resolve())
 
-[1000,30,500,3000].reduce(async function (promise, n, i){
+timeouts.reduce(async function (promise, n, i){
   await promise
   await sleep(n)
-  console.log(i, 'Done with initial 1')
-}, 1);
+  console.log(i, 'Done with initial undefined')
+}, undefined)
 
-[1000,30,500,3000].reduce(async function (promise, n, i){
+timeouts.reduce(async function (promise, n, i){
   await promise
   await sleep(n)
   console.log(i, 'Done with initial undeclared')
 })
 
-
+// async function sleepForP_fE(n) {
+//   await new Promise(function(resolve){
+//     setTimeout(resolve, n)
+//   })
+//   return (`in sleepForP_fE ${n}`)
+// }
+// async function fnForP_FE(promise, i, arr){
+//   console.warn('fnForP_FE',promise, i, arr)
+//   await promise
+//   console.warn('fnForP_FE',promise, i, arr)
+// }
+// Promise._forEach(
+//   timeouts.map(e=>sleepForP_fE(e))
+//   , fnForP_FE
+// )
 
 
 /**
@@ -113,38 +146,38 @@ async function sleep(n) {
  * @param {array} arr - promise arr
  * @return {Object} promise object
  */
-function runPromiseInSequence(arr, input) {
-  return arr.reduce(
-    (promiseChain, currentFunction) => promiseChain.then(currentFunction),
-    Promise.resolve(input)
-  )
-}
+// function runPromiseInSequence(arr, input) {
+//   return arr.reduce(
+//     (promiseChain, currentFunction) => promiseChain.then(currentFunction),
+//     Promise.resolve(input)
+//   )
+// }
 
-// promise function 1
-function p1(a) {
-  return new Promise((resolve, reject) => {
-    resolve(a * 5)
-  })
-}
+// // promise function 1
+// function p1(a) {
+//   return new Promise((resolve, reject) => {
+//     resolve(a * 5)
+//   })
+// }
 
-// promise function 2
-function p2(a) {
-  return new Promise((resolve, reject) => {
-    resolve(a * 2)
-  })
-}
+// // promise function 2
+// function p2(a) {
+//   return new Promise((resolve, reject) => {
+//     resolve(a * 2)
+//   })
+// }
 
-// function 3  - will be wrapped in a resolved promise by .then()
-function f3(a) {
-  return a * 3
-}
+// // function 3  - will be wrapped in a resolved promise by .then()
+// function f3(a) {
+//   return a * 3
+// }
 
-// promise function 4
-function p4(a) {
-  return new Promise((resolve, reject) => {
-    resolve(a * 4)
-  })
-}
+// // promise function 4
+// function p4(a) {
+//   return new Promise((resolve, reject) => {
+//     resolve(a * 4)
+//   })
+// }
 
-const promiseArr = [p1, p2, f3, p4]
+// const promiseArr = [p1, p2, f3, p4]
 // runPromiseInSequence(promiseArr, 10).then(console.log)   // 1200
