@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <style type="text/css">
+      /*  coloring + sizing for demo */
+      parent, .parent{
+        margin: 50px;
+        height:200px;
+        background-color:purple;
+      }
+      child, .child {
+        height:50px;
+        width:50px;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h2><a href="https://codepen.io/dbbrowne/pen/eYePpRO">See this on Codepen</a></h2>
+    <p>Parent: style="display:flex; align-items:center;"</p>
+    <div 
+      class="parent"
+      style="display:flex; align-items:center;"
+    >
+      <div class="child"></div>
+    </div>
+
+    <p>Parent: style="display:flex"</p>
+    <p>Child: style="margin:auto"</p>
+    <div 
+      class="parent"
+      style="display:flex"
+    >
+      <div style="margin:auto" class="child"></div>
+    </div>
+    <p>Parent: style="display:flex"</p>
+    <p>Child: style="margin:auto 0"</p>
+    <parent style="display:flex">
+      <child style="margin:auto 0"></child>
+    </parent>
+
+    <p>Wrap child in &lt;center	&gt;</p>
+    <parent style="display:block">
+      <center>
+        <child style="display:block"></child>
+      </center>
+    </parent>
+
+    <p>Parent: style="display:flex"</p>
+    <p>2 Children: style="margin:auto"</p>
+    <div 
+      class="parent"
+      style="display:flex;"
+    >
+      <div style="margin:auto" class="child"></div>
+      <div style="margin:auto" class="child"></div>
+    </div>
+  </body>
+</html>
