@@ -24,17 +24,19 @@
       }
 
       .burger-button{
-        z-index:9;
+        /* z-index:9; */
         font-size: var(--burger-icon-width);
         color: purple;
+        margin-left: var(--burger-icon-width);
 
         opacity: 0.6;
-        position: fixed;
-        left:0;
-        transition: right var(--nav-transition-duration);
+        position: relative;
+        right:0;
+        transition: right;
+        transition-duration: var(--nav-transition-duration);
       }
       nav{
-        right: calc(100vw);
+        right: calc(100vw - var(--burger-icon-width));
         transition: right var(--nav-transition-duration);
       }
       nav:hover{
@@ -43,8 +45,11 @@
         border-radius: 0 1rem 1rem 0;
       }
       nav:hover .burger-button{
-        position: fixed;
-        right:100vw;
+        /* position: fixed; */
+        right:200%;
+        /* width:0; */
+        /* margin-left:0; */
+        /* opacity:0; */
         /* display: none; */
       }
     </style>
