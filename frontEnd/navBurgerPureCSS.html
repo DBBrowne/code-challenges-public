@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <style type="text/css">
+      :root{
+        --color-bg: lightgray;
+                
+        --nav-logo-width: 5rem;
+        --nav-logo-margin: 1rem;
+
+        --burger-icon-width: 2rem;
+      }
+      body{
+        background-color: var(--color-bg);
+      }
+      nav{
+        display: flex;
+        position:fixed;
+      }
+      .nav-logo{
+        width: var(--nav-logo-width);
+        margin: var(--nav-logo-margin);
+      }
+
+      .burger-button{
+        font-size: var(--burger-icon-width);
+
+        padding-left: 2rem;
+        opacity: 0.6;
+        color: purple;
+      }
+      nav{
+        right: calc(100vw - var(--burger-icon-width));
+      }
+      nav:hover{
+        right: unset;
+        background-color: var(--color-bg);
+        
+        border-radius: 0 1rem 1rem 0;
+      }
+      nav:hover .burger-button{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div>
+        <img 
+          src="http://tiny.cc/em2puz"
+          alt="Unsplash is fantastic.  Check them out at the img src." 
+          class="nav-logo"
+        />
+      <ul>
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+      </ul>
+      </div>
+      <h2 class="burger-button">❰❰</h2>
+    </nav>
+    <p class="content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer cursus mauris a lectus semper hendrerit. Phasellus lacinia varius semper. Nunc commodo est a dolor hendrerit ultricies. Ut imperdiet lacinia ligula quis ornare. Suspendisse potenti. Proin in mi quam. Fusce placerat est eu libero tincidunt elementum. Donec lacinia, ipsum a interdum sollicitudin, arcu arcu imperdiet lorem, ac feugiat ipsum arcu vitae arcu. Morbi placerat accumsan neque quis porta. Cras facilisis dictum velit ac tincidunt. Duis eget orci interdum nibh euismod accumsan. Donec id finibus lorem. Curabitur eu ante blandit, pulvinar diam in, bibendum orci. Pellentesque libero magna, ornare quis porttitor nec, lacinia et dui. Mauris in risus et nisl luctus aliquet non ut mauris. Pellentesque hendrerit varius est, ut sagittis sem rutrum sed.
+    </p>
+    <p class="content">
+      Nulla lacus lectus, sodales quis dui id, dictum ultricies eros. Nunc pharetra laoreet gravida. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus ut venenatis lacus, ut gravida ipsum. Proin vehicula eros ultrices aliquet porttitor. Nulla facilisi. Phasellus ut eros in orci commodo laoreet. In hac habitasse platea dictumst. Pellentesque et rutrum sapien, vel mattis neque. Quisque cu
+    </p>
+  </body>
+</html>
