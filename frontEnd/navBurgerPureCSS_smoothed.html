@@ -16,6 +16,7 @@
       nav{
         display: flex;
         position:fixed;
+        z-index: 10;
       }
       .nav-logo{
         width: var(--nav-logo-width);
@@ -23,14 +24,17 @@
       }
 
       .burger-button{
+        z-index:9;
         font-size: var(--burger-icon-width);
         color: purple;
 
-        padding-left: 2rem;
         opacity: 0.6;
+        position: fixed;
+        left:0;
+        transition: right var(--nav-transition-duration);
       }
       nav{
-        right: calc(100vw - var(--burger-icon-width));
+        right: calc(100vw);
         transition: right var(--nav-transition-duration);
       }
       nav:hover{
@@ -39,7 +43,9 @@
         border-radius: 0 1rem 1rem 0;
       }
       nav:hover .burger-button{
-        display: none;
+        position: fixed;
+        right:100vw;
+        /* display: none; */
       }
     </style>
   </head>
