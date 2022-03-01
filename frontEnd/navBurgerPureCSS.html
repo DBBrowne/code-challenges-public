@@ -17,6 +17,9 @@
         display: flex;
         position:fixed;
       }
+      nav .menu-content{
+        background-color: var(--color-bg);
+      }
       .nav-logo{
         width: var(--nav-logo-width);
         margin: var(--nav-logo-margin);
@@ -34,7 +37,6 @@
       }
       nav:hover{
         right: unset;
-        background-color: var(--color-bg);
         
         border-radius: 0 1rem 1rem 0;
       }
@@ -45,7 +47,7 @@
   </head>
   <body>
     <nav>
-      <div>
+      <div class="menu-content">
         <img 
           src="http://tiny.cc/em2puz"
           alt="Unsplash is fantastic.  Check them out at the img src." 
