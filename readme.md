@@ -121,6 +121,7 @@ Test case: Input: 2 Out: 2
 
 
 ## TODO
+  - fix circular reference induced by testing directionsreduction.js
  - jsdoc docstrings
  - Survive circular references.
  - Move these to GH Issues
