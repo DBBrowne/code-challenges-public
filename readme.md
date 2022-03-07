@@ -121,8 +121,8 @@ Test case: Input: 2 Out: 2
 
 
 ## TODO
- - Best practices for  showing fn output in this readme?
  - jsdoc docstrings
+ - Survive circular references.
  - Move these to GH Issues
  - Automate updating this readme with a tree to make locating completed challenges easier? (bash script? incorporate Tree? commit hook?) 
  - Examine stdout vs console.info?  May help with testing the testing lib.
