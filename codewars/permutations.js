@@ -68,6 +68,7 @@ function permutationsObject(string) {
   return Object.keys(permutationsOutput)
 }
 
+// cut out all the split + join
 function permutationsKeepString(string) {
   const stringLength = string.length
   if (1 >= string.length) return [string]
