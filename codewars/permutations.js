@@ -109,6 +109,19 @@ function codeWarsSln(str) {
     ))
 }
 
+// functional
+const unique = xs => [ ...new Set(xs) ]
+const concat = (a, b) => [ ...a, ...b ] 
+const drop = i => xs => [ ...xs.slice(0, i), ...xs.slice(i + 1) ]
+
+const permute = (x, i, xs) => 
+  combinations(drop(i)(xs)).map(y => x + y)
+
+const combinations = s =>
+  s.length === 1 ? [ s ] : [ ...s ].map(permute).reduce(concat)
+
+const permutationsFunctional = s => unique(combinations(s))
+
 var test = require('../lib/test')
 const fnsToTst = [
   permutationsSln,
@@ -116,6 +129,7 @@ const fnsToTst = [
   permutationsObject,
   permutationsKeepString,
   permutationsKeepStringUglified,
+  permutationsFunctional,
   codeWarsSln
 ]
 const testCases = [
