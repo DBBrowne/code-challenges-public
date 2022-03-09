@@ -13,6 +13,23 @@ On execution time:
 - Failing a test case causes a console write, which slows execution.
 
 ## Usage:
+```
+function fn1 (input) {return output}
+function fn2 (input) {return output}
+
+var test = require('../lib/test')
+
+const fnsToTest = [
+  fn1,
+  fn2
+]
+const testCases = [
+  [input, output],
+]
+test.byFunction(fnsToTest, testCases)
+```
+
+
 See [lib/demo.js](https://github.com/DBBrowne/code-challenges-public/blob/main/lib/demo.js). Or run the demo with 
 ```console
 $ node <repo-root>/lib/demo.js
@@ -20,8 +37,10 @@ $ node <repo-root>/lib/demo.js
 
 Within the code challenge file:
 ```javascript
+// Import the test lib
 const test  = require('../lib/test')
 
+// 
 function fnOne (n) {
   return n
 }
@@ -35,6 +54,7 @@ const testCases = [
   [1,1],
   [2,2]
 ]
+// Array of function definitions to test.  Results can be grouped by function or test case.
 const fnsToTest = [
   fnOne,
   fnTwo
@@ -121,9 +141,10 @@ Test case: Input: 2 Out: 2
 
 
 ## TODO
-  - fix circular reference induced by testing directionsreduction.js
+ - handle `Date` and `RegExp` object types?
  - jsdoc docstrings
- - Survive circular references.
+ - handle circular references in Expected object
+
  - Move these to GH Issues
  - Automate updating this readme with a tree to make locating completed challenges easier? (bash script? incorporate Tree? commit hook?) 
  - Examine stdout vs console.info?  May help with testing the testing lib.
@@ -131,3 +152,17 @@ Test case: Input: 2 Out: 2
  - Refactor showPasses to {options} parameter in testFn
  - Implement NOT flag in test suite
  - Implement option for gathering performance data without printing failures to console
+
+ ### Setup:
+
+ ```
+const test = require('../lib/test')
+const fnsToTest = [
+
+]
+
+const testCases = [
+  [ , ],
+]
+test.byFunction(fnsToTest, testCases)
+ ```
