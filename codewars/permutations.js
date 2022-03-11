@@ -68,6 +68,28 @@ function permutationsObject(string) {
   return Object.keys(permutationsOutput)
 }
 
+function recurseWithSet(string){
+  
+  const stringLength = string.length
+  if (1 >= string.length) return [string]
+  
+  const permutationsReturn = new Set
+  
+  for (let i = 0;i < stringLength; i++){
+    const letter = string.substr(i,1)
+    const remaining = string.substr(0, i) + string.substr(i + 1, stringLength - (i + 1))
+    const childPermutations = recurseWithSet(remaining)
+    childPermutations.forEach(perm=>{
+      permutationsReturn.add(letter + perm)
+    })
+  }
+  return permutationsReturn
+}
+  
+function permutationsWithSet(string) {
+  return Array.from(recurseWithSet(string))
+}
+
 // cut out all the split + join
 function permutationsKeepString(string) {
   const stringLength = string.length
@@ -123,6 +145,9 @@ const combinations = s =>
 
 const permutationsFunctional = s => unique(combinations(s))
 
+// **************************************************************
+// Testing
+
 var test = require('../lib/test')
 const fnsToTst = [
   permutationsSln,
@@ -130,6 +155,7 @@ const fnsToTst = [
   permutationsObject,
   permutationsKeepString,
   permutationsKeepStringUglified,
+  permutationsWithSet,
   permutationsFunctional,
   codeWarsSln
 ]
