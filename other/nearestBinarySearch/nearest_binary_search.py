@@ -10,7 +10,7 @@ def counts(teamA, teamB):
     
     return matchedScores
 
-def countsFast(teamA, teamB):
+def counts_sort_walk(teamA, teamB):
     _teamB = teamB.copy()
     _teamB.sort()
     teamA.sort()
@@ -40,7 +40,7 @@ def countsFast(teamA, teamB):
 
     return teamB
 
-def countsFaster(teamA, teamB):
+def counts_sort_walk_neater(teamA, teamB):
     _teamB = teamB.copy()
     _teamB.sort()
     teamA.sort()
@@ -48,17 +48,15 @@ def countsFaster(teamA, teamB):
     length_A = len(teamA)
     cache = {}
     previous_A_index = 0
-    current_matches = 0
-    # print(teamA, teamB, _teamB)
 
-    for index, scoreB in enumerate(_teamB):
+    for scoreB in _teamB:
+        # because teamA is sorted, the highest matching index = count of all lower values
         while (
             previous_A_index < length_A and
             teamA[previous_A_index] <= scoreB
             ):
-            current_matches += 1
             previous_A_index += 1
-        cache[scoreB] = current_matches
+        cache[scoreB] = previous_A_index
     
     for index, score in enumerate(teamB):
         teamB[index] = cache[score]
@@ -75,21 +73,24 @@ import time
 output = counts([3,2,1], [2,4])
 assert output == [2,3]
 
-output = countsFast([3,2,1], [2,4])
+output = counts_sort_walk([3,2,1], [2,4])
 # print(output)
 assert output == [2,3]
 
-output = countsFaster([3,2,1], [2,4])
+output = counts_sort_walk_neater([3,2,1], [2,4])
 # print(output)
 assert output == [2,3]
 
 # * Timings
+max_score = 1e9
+max_length = 1e5
+
 def timer(function, arg1, arg2):
+    print(function.__name__)
     start_time = time.time()
     function(arg1, arg2)
     print("--- %s ms ---" % ((time.time() - start_time)*1000))
 
-max_score = 1e9
 def scores_generator(size):
     matrix = []
 
@@ -100,44 +101,60 @@ def scores_generator(size):
 
     return matrix
 
+class test_case:
+    def __init__ (self, inputs, refs):
+        self.inputs = inputs
+        self.refs = refs
+
+bench = [
+    [
+        100_000, 
+        100_000
+    ],
+    [
+        1_000_000, 
+        1_000_000
+    ],
+    [
+        10_000_000, 
+        10_000_000
+    ],
+    [
+        random.randint(0, max_length), 
+        random.randint(0, max_length)
+    ],
+    [
+        random.randint(0, max_length), 
+        random.randint(0, max_length)
+    ]
+]
+
+functions = [
+    counts_sort_walk,
+    counts_sort_walk_neater
+]
+
+print('')
 teamA = scores_generator(1000)
 teamB = scores_generator(1000)
 print('1k')
 timer(counts, teamA, teamB) 
-timer(countsFast, teamA, teamB) 
+timer(counts_sort_walk_neater, teamA, teamB) 
 
+print('')
 teamA = scores_generator(10000)
 teamB = scores_generator(10000)
 print('10k')
-timer(counts, teamA, teamB) 
-timer(countsFast, teamA, teamB) 
+timer(counts, teamA.copy(), teamB.copy()) 
+timer(counts_sort_walk_neater, teamA.copy(), teamB.copy()) 
 
-print('100k')
-teamA = scores_generator(100000)
-teamB = scores_generator(100000)
-timer(countsFast, teamA, teamB) # 63 ms
 
-print('1m')
-teamA = scores_generator(1000000)
-teamB = scores_generator(1000000)
+for case in bench:
+    print()
+    print(case)
 
-timer(countsFast, teamA, teamB) # 940 ms
-print('10m')
-teamA = scores_generator(10000000)
-teamB = scores_generator(10000000)
+    A = scores_generator(case[0])
+    B = scores_generator(case[1])
 
-timer(countsFast, teamA, teamB) # 10660 ms
-print('100k')
-teamA = scores_generator(100000)
-teamB = scores_generator(100000)
-
-timer(countsFaster, teamA, teamB) # 63 ms
-print('1m')
-teamA = scores_generator(1000000)
-teamB = scores_generator(1000000)
-
-timer(countsFaster, teamA, teamB) # 940 ms
-print('10m')
-teamA = scores_generator(10000000)
-teamB = scores_generator(10000000)
-timer(countsFaster, teamA, teamB) # 10660 ms
+    for fn in functions:
+        timer(fn, A.copy(), B.copy())
