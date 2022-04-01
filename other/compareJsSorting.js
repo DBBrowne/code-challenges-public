@@ -21,9 +21,9 @@ Array.prototype._sortNumsReverse = function(compFn = compAsc){
 }
 
 const functionsToTime = [
-  // function sortAscProto (arr) {
-  //   arr._sortNums()
-  // },
+  function sortAscProto (arr) {
+    arr._sortNums()
+  },
   function sortDescProto (arr) {
     arr._sortNumsDesc()
   },
@@ -90,8 +90,13 @@ function execStats (arr){
 
 const process = require('process')
 
+const repetitions = 10
+
 function consoleGreen (string) {
   return `\x1b[32;1m${string}\x1b[0m`
+}
+function consoleRed (string) {
+  return `\x1b[31;1m${string}\x1b[0m`
 }
 
 const bench = [
@@ -108,8 +113,6 @@ const bench = [
   // 1e12,
   // 1e13
 ]
-
-const repetitions = 10
 bench.forEach(function (size){
   const metaTimes = []
   
@@ -143,8 +146,36 @@ bench.forEach(function (size){
   const metaTimes = []
 
   console.info('')
-  console.info(size, 'pre sorted (best case)')
+  console.info(size, 'pre sorted Ascending (best case)')
   const arr = generateValues(size).sort(compAsc)
+  functionsToTime.forEach(function(fn){
+    const times = []
+    for (let i = 0;i < repetitions; i++){
+      const _arr = arr.slice(0)
+      const timeStart = process.hrtime.bigint()
+      fn(_arr)
+      times.push((process.hrtime.bigint() - timeStart))
+    }
+    const stats = execStats(times)
+    metaTimes.push(BigInt(Math.round(stats.mean * 1e6)))
+    console.info(`${fn.name}, ${repetitions} reps :`, stats,  '(all in ms, 3s.f.)')
+  })
+
+  const metaStats = execStats(metaTimes)
+  const minAsBigInt = metaTimes.reduce((acc, curr)=>{
+    if (curr < acc) return curr
+    return acc
+  }, BigInt(Math.pow(2, 63)))
+  const fastest = functionsToTime[metaTimes.indexOf(minAsBigInt)].name
+  console.info('\t', consoleRed(`Fastest: ${fastest}`), metaStats)
+})
+
+bench.forEach(function (size){
+  const metaTimes = []
+
+  console.info('')
+  console.info(size, 'pre sorted Descending (best case)')
+  const arr = generateValues(size).sort(compDesc)
   functionsToTime.forEach(function(fn){
     const times = []
     for (let i = 0;i < repetitions; i++){
