@@ -38,7 +38,7 @@ function basefibForMemo (n) {
 }
 const fibMemo = memo(basefibForMemo)
 
-function fibTwo (n) {
+function fibIterative (n) {
   let result = 0
   let prevResult = 0
   let prevPrevResult = 0
@@ -52,7 +52,7 @@ function fibTwo (n) {
   return result
 }
 
-const fibTwoMemo = memo(fibTwo)
+const fibIterativeMemo = memo(fibIterative)
 
 function fibElegantFromCodewars(n){
   let [a, b] = [0, 1]
@@ -62,6 +62,22 @@ function fibElegantFromCodewars(n){
     [a, b] = [b, a + b]
   }
   return a
+}
+
+function fibInternalMemo (n, memo ={}){
+  if (memo[n]) return memo[n]
+  if (n<=2) return 1
+
+  memo[n] = fibInternalMemo(n-1, memo) + fibInternalMemo(n-2, memo)
+  return memo[n]
+}
+function fibInternalMemo2 (n, memo ={}){
+  if (memo[n]) return memo[n]
+  if (n<=2) return 1
+
+  const result = fibInternalMemo2(n-1, memo) + fibInternalMemo2(n-2, memo)
+  memo[n] = result
+  return result
 }
 
 const fibElegantFromCodewarsMemo = memo(fibElegantFromCodewars)
@@ -90,12 +106,16 @@ const baseFibTestArray = [
 ]
 
 const functionsToTest = [
-  fibTwo,
-  fibTwoMemo,
+  fibIterative,
+  fibIterativeMemo,
+  fibIterative,
+  fibIterativeMemo,
   // fib,
   fibMemo,
   fibElegantFromCodewars,
-  fibElegantFromCodewarsMemo
+  fibElegantFromCodewarsMemo,
+  fibInternalMemo,
+  fibInternalMemo2,
 ]
 
 // test.byFunction(functionsToTest, baseFibTestArray)
