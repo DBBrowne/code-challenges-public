@@ -133,9 +133,9 @@ bench.forEach(function (size){
   })
 
   const metaStats = execStats(metaTimes)
-  const minAsBigInt = metaTimes.reduce((acc, curr)=>{
-    if (curr < acc) return curr
-    return acc
+  const minAsBigInt = metaTimes.reduce((prev, curr)=>{
+    if (curr < prev) return curr
+    return prev
   }, BigInt(Math.pow(2, 63)))
   const fastest = functionsToTime[metaTimes.indexOf(minAsBigInt)].name
   console.info('\t', consoleGreen(`Fastest: ${fastest}`), metaStats)
@@ -162,9 +162,9 @@ bench.forEach(function (size){
   })
 
   const metaStats = execStats(metaTimes)
-  const minAsBigInt = metaTimes.reduce((acc, curr)=>{
-    if (curr < acc) return curr
-    return acc
+  const minAsBigInt = metaTimes.reduce((prev, curr)=>{
+    if (curr < prev) return curr
+    return prev
   }, BigInt(Math.pow(2, 63)))
   const fastest = functionsToTime[metaTimes.indexOf(minAsBigInt)].name
   console.info('\t', consoleRed(`Fastest: ${fastest}`), metaStats)
@@ -190,9 +190,9 @@ bench.forEach(function (size){
   })
 
   const metaStats = execStats(metaTimes)
-  const minAsBigInt = metaTimes.reduce((acc, curr)=>{
-    if (curr < acc) return curr
-    return acc
+  const minAsBigInt = metaTimes.reduce((prev, curr)=>{
+    if (curr < prev) return curr
+    return prev
   }, BigInt(Math.pow(2, 63)))
   const fastest = functionsToTime[metaTimes.indexOf(minAsBigInt)].name
   console.info('\t', consoleGreen(`Fastest: ${fastest}`), metaStats)
